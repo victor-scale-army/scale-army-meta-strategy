@@ -261,9 +261,9 @@
 
 <section id="proposed">
   <p class="kicker">Model C</p>
-  <span class="badge proposed">Proposed · Not decided · Alex, CEO</span>
+  <span class="badge proposed">Proposed by Alex</span>
   <h2>Evergreen + Exploration</h2>
-  <p>His thesis: consolidate almost everything into <strong>one ad set</strong>, and fix the
+  <p>The thesis: consolidate almost everything into <strong>one ad set</strong>, and fix the
   signal quality feeding it instead of fixing it with more structure.</p>
   <div class="diagram">
     <span class="box">One ad set<br><small>Evergreen</small></span>
@@ -293,9 +293,16 @@
     </div>
     <div class="card">
       <h3>What it costs to turn on</h3>
-      <p style="font-size:.93rem;">HubSpot→Meta CAPI, domain-based company-size enrichment,
-      a gated booking calendar, and a value table — all live <em>before</em> any structural
-      change, per the doc's own rule.</p>
+      <ol class="mini-steps">
+        <li>Connect HubSpot to Meta via CAPI, so lead outcomes flow back automatically.</li>
+        <li>Turn on domain-based company-size enrichment, so we know how big a lead's
+        company is without asking.</li>
+        <li>Gate the booking calendar so under-10-employee companies never see the
+        calendar.</li>
+        <li>Build the value table — the size × booked → score lookup all of this feeds.</li>
+      </ol>
+      <p style="font-size:.85rem;margin-top:.8rem;opacity:.8;">All of it live <em>before</em>
+      any structural change, per the doc's own rule.</p>
     </div>
   </div>
 </section>
