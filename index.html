@@ -292,19 +292,47 @@
       </ol>
     </div>
     <div class="card">
-      <h3>What it costs to turn on</h3>
+      <h3>What we'd actually need to do</h3>
       <ol class="mini-steps">
-        <li>Connect HubSpot to Meta via CAPI, so lead outcomes flow back automatically.</li>
-        <li>Turn on domain-based company-size enrichment, so we know how big a lead's
-        company is without asking.</li>
-        <li>Gate the booking calendar so under-10-employee companies never see the
-        calendar.</li>
+        <li>Verify what's really connected today — a real server-side integration (HubSpot's
+        native Meta Ads tool), or just a browser-side Pixel via GTM. They are not the same
+        thing, and only the first can carry data that resolves after the visit.</li>
+        <li>If it isn't server-side yet, connect it — configured to match leads by
+        <strong>email/phone</strong>, not only a click ID.</li>
+        <li>Keep the on-site Pixel running as-is — this doesn't replace it, it adds a
+        second, more reliable channel alongside it.</li>
+        <li>Get a real answer on the enrichment tool's failure rate — it already fails
+        (runs out of credits) — before betting this on it. "Turn it on" isn't enough; we need
+        to know what happens when it fails.</li>
+        <li>Gate the booking calendar on that (verified) enrichment result.</li>
         <li>Build the value table — the size × booked → score lookup all of this feeds.</li>
       </ol>
-      <p style="font-size:.85rem;margin-top:.8rem;opacity:.8;">All of it live <em>before</em>
-      any structural change, per the doc's own rule.</p>
     </div>
   </div>
+
+  <div class="callout" style="margin-top:1.8rem;">
+    <strong>How the event actually reaches Meta.</strong> This part sounds unusual, so here's
+    the mechanism plainly.
+  </div>
+  <div class="diagram">
+    <span class="box">Pixel fires in browser<br><small>real-time, while they're on the site — unchanged</small></span>
+    <span class="arrow">+</span>
+    <span class="box">HubSpot sends CAPI event later<br><small>server-side, whenever size/booking is known</small></span>
+    <span class="arrow">→</span>
+    <span class="box">Meta matches both<br><small>via email, phone, IP — not only a click ID</small></span>
+  </div>
+  <p style="margin-top:1.2rem;font-size:.95rem;">Nothing on the site gets removed. The Pixel
+  keeps firing exactly as it does today. CAPI is a <em>second</em> channel, sent from
+  HubSpot's server (not GTM — GTM only runs in the browser and can't act on something that
+  happens in the CRM after the visit is over). It doesn't rely on a single click ID surviving:
+  it sends the lead's hashed email and phone along with it, and Meta matches on whichever
+  identifiers it has — email is one of the strongest signals precisely because it doesn't
+  depend on a cookie or browser session still being alive. This part — server-side CAPI
+  matched by contact details — is a standard, well-documented pattern for any CRM-driven
+  business advertising on Meta, not something novel to this proposal. What <em>is</em> unusual,
+  and is fair to be skeptical of, is the next layer: collapsing the whole signal into one
+  artificially delayed event carrying a hand-built score, instead of sending each real pipeline
+  event as it naturally happens.</p>
 </section>
 
 <section id="compare">
