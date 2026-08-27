@@ -153,6 +153,19 @@
   }
   .phase-title{font-weight:700;font-family:'EB Garamond';font-size:1.05rem;margin-bottom:.5rem;}
 
+  ol.mini-steps{counter-reset:mini;list-style:none;padding:0;margin:.6rem 0 0;}
+  ol.mini-steps li{
+    counter-increment:mini;position:relative;padding-left:1.9rem;
+    margin-bottom:.55rem;font-size:.93rem;
+  }
+  ol.mini-steps li::before{
+    content:counter(mini);position:absolute;left:0;top:.05rem;
+    width:1.3rem;height:1.3rem;border-radius:50%;
+    background:var(--rust);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Poppins';font-weight:600;font-size:.72rem;
+  }
+
   .footer-nav{display:flex;justify-content:space-between;align-items:center;padding:2rem 8vw;font-size:.85rem;opacity:.7;}
   code{background:rgba(22,43,62,.08);padding:.1rem .35rem;border-radius:4px;font-size:.85em;}
   section.dark code{background:rgba(255,255,255,.12);}
@@ -261,11 +274,19 @@
   </div>
   <div class="grid2">
     <div class="card">
-      <h3>The mechanism that makes it safe</h3>
-      <p style="font-size:.93rem;">Optimize on the shallow <code>Lead</code> event (only one with volume —
-      ~65/wk vs. the ~50/wk threshold), but delay firing it ~60 min and attach a
-      <strong>conversion value</strong>: a hump-shaped curve by company size (peaks ~50–200
-      employees, falls off for enterprise) × whether they booked.</p>
+      <h3>What Alex wants to happen, step by step</h3>
+      <ol class="mini-steps">
+        <li>Someone fills out our lead form.</li>
+        <li>We wait about an hour before telling Meta about it.</li>
+        <li>In that hour, we find out two things: how big their company is, and whether they
+        actually booked a call.</li>
+        <li>We tell Meta about the lead — but now attach a <strong>score</strong>: bigger
+        companies score higher, up to a sweet spot (~50–200 employees), then score
+        <em>lower again</em> for huge enterprises. Booking a call scores much higher than not
+        booking.</li>
+        <li>We tell Meta to spend our budget chasing the <strong>highest total score</strong>,
+        not just the most leads.</li>
+      </ol>
     </div>
     <div class="card">
       <h3>What it costs to turn on</h3>
