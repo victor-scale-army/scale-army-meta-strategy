@@ -182,8 +182,6 @@
   <a href="#evidence" title="Live evidence"></a>
   <a href="#proposed" title="Evergreen proposal"></a>
   <a href="#compare" title="Comparison"></a>
-  <a href="#conflict" title="Conflict"></a>
-  <a href="#recommendation" title="Recommendation"></a>
   <a href="#steps" title="Next steps"></a>
 </nav>
 
@@ -389,57 +387,10 @@
   </div>
 </section>
 
-<section id="conflict" class="dark">
-  <p class="kicker">Needs resolving before anything ships</p>
-  <h2>Two decisions from the same person, in conflict</h2>
-  <div class="grid2">
-    <div class="card">
-      <h3>The scheduling tool (this week)</h3>
-      <p style="font-size:.95rem;">New internal booking form asks the lead to
-      <strong>self-report company size</strong>. Under 10 employees → disqualified via GTM.</p>
-    </div>
-    <div class="card">
-      <h3>§2.2a of Alex's own doc</h3>
-      <p style="font-size:.95rem;">"Do not use a self-reported company size field. Anyone
-      motivated to book will select whatever band gets them through... <strong>Enrich off the
-      domain instead</strong> — more accurate, invisible to the user, available in the same
-      session."</p>
-    </div>
-  </div>
-  <div class="callout" style="margin-top:1.8rem;">
-    <strong>This isn't a nuance to quietly resolve on our own.</strong> Building the scheduling
-    tool on self-report now, only to redo it for domain enrichment next month, is wasted
-    engineering effort either way. Needs a direct answer from Alex.
-  </div>
-</section>
-
-<section id="recommendation">
-  <p class="kicker">Recommendation</p>
-  <h2>Move toward Evergreen — but sequenced, not switched overnight</h2>
-  <div class="rec-box">
-    <h3>Do this, in this order</h3>
-    <p>The account evidence already backs Alex's math: 8 ad sets, $7,982 spent, 9 conversions,
-    zero exits from learning. That's not a future risk — it's this month. Of the three models,
-    Evergreen is the only one designed around our actual weekly volume rather than general best
-    practice, and it comes with the most complete operating plan (rollout, do-not list, kill/graduate
-    rules).</p>
-    <p><strong>But</strong> the doc itself is explicit: no structural change before the signal
-    work (CAPI, enrichment, value curve) is live. Collapsing to one ad set today, on top of a
-    shallow event with no value model, would just consolidate spend behind bad signal faster.</p>
-    <p>Don't kill 94/95 mid-air either — let their current learning window finish or fold their
-    winning creative into evergreen once it's live, per the doc's own graduation logic. The
-    persona/angle map isn't wasted — it becomes the creative taxonomy and naming layer, not the
-    ad set structure.</p>
-  </div>
-</section>
-
 <section id="steps">
-  <p class="kicker">If we agree</p>
+  <p class="kicker">Recommended steps</p>
   <h2>Step by step</h2>
   <ol class="steps">
-    <li><span class="phase-title">Week 0 — Resolve the conflict</span>
-    Get a direct answer from Alex: self-reported size (scheduling tool) or domain enrichment
-    (his own doc) as the source of truth for company size. Don't build both.</li>
     <li><span class="phase-title">Weeks 1–3 — Signal</span>
     Check the Page ad-limit band · wire domain enrichment into step 1 of the form (unknowns pass
     through) · HubSpot → Meta CAPI live, deduplicated against the pixel · fire the full 6-event
