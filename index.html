@@ -99,6 +99,8 @@
   .card.cons{border-left:4px solid var(--rust);}
   .card ul{margin:.4rem 0 0;padding-left:1.15rem;}
   .card li{margin-bottom:.45rem;font-size:.95rem;}
+  ul.plusminus{list-style:none;padding-left:0;}
+  ul.plusminus li{padding-left:0;}
 
   table{width:100%;border-collapse:collapse;margin-top:1.2rem;font-size:.92rem;}
   th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid rgba(22,43,62,.12);vertical-align:top;}
@@ -212,7 +214,7 @@
 
 <section id="validated">
   <p class="kicker">Model A</p>
-  <span class="badge validated">Validated · Live since ~day one</span>
+  <span class="badge validated">Current · Validated</span>
   <h2>One campaign per role, one creative per ad set</h2>
   <div class="diagram">
     <span class="box">Campaign = Role type<br><small>Marketing · AI · Engineering</small></span>
@@ -355,8 +357,8 @@
   <div class="grid3">
     <div class="card">
       <h3>A · Validated</h3>
-      <ul>
-        <li><strong>+</strong> Proven across ~98 campaigns; team already fluent in it</li>
+      <ul class="plusminus">
+        <li><strong>+</strong> Already proven to work — not perfectly, but it works</li>
         <li><strong>+</strong> ABO spreads risk across creatives (portfolio-safe)</li>
         <li><strong>−</strong> Doesn't encode buyer persona/angle/quality at all</li>
         <li><strong>−</strong> Many small campaigns already fragment volume account-wide</li>
@@ -365,7 +367,7 @@
     </div>
     <div class="card">
       <h3>B · Andromeda test</h3>
-      <ul>
+      <ul class="plusminus">
         <li><strong>+</strong> Matches documented Meta mechanics (creative = targeting)</li>
         <li><strong>+</strong> Concrete persona/angle bank already built to fund it</li>
         <li><strong>−</strong> Directly fragments volume below the learning threshold</li>
@@ -375,12 +377,10 @@
     </div>
     <div class="card">
       <h3>C · Evergreen (proposed)</h3>
-      <ul>
+      <ul class="plusminus">
         <li><strong>+</strong> Only model built from our actual weekly volume numbers</li>
         <li><strong>+</strong> Encodes lead quality directly (size + booking → value)</li>
-        <li><strong>+</strong> Comes with a full rollout plan, do-not list, kill/graduate rules</li>
         <li><strong>−</strong> Real martech lift (CAPI, enrichment, value table) before launch</li>
-        <li><strong>−</strong> Conflicts with the just-announced scheduling tool (see next)</li>
         <li><strong>−</strong> Risk of offer cannibalization inside one shared ad set</li>
       </ul>
     </div>
