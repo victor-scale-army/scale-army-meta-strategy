@@ -321,18 +321,34 @@
     <span class="arrow">→</span>
     <span class="box">Meta matches both<br><small>via email, phone, IP — not only a click ID</small></span>
   </div>
-  <p style="margin-top:1.2rem;font-size:.95rem;">Nothing on the site gets removed. The Pixel
-  keeps firing exactly as it does today. CAPI is a <em>second</em> channel, sent from
-  HubSpot's server (not GTM — GTM only runs in the browser and can't act on something that
-  happens in the CRM after the visit is over). It doesn't rely on a single click ID surviving:
-  it sends the lead's hashed email and phone along with it, and Meta matches on whichever
-  identifiers it has — email is one of the strongest signals precisely because it doesn't
-  depend on a cookie or browser session still being alive. This part — server-side CAPI
-  matched by contact details — is a standard, well-documented pattern for any CRM-driven
-  business advertising on Meta, not something novel to this proposal. What <em>is</em> unusual,
-  and is fair to be skeptical of, is the next layer: collapsing the whole signal into one
-  artificially delayed event carrying a hand-built score, instead of sending each real pipeline
-  event as it naturally happens.</p>
+  <div class="grid2">
+    <div class="card pros">
+      <h3>Standard — not new</h3>
+      <ul>
+        <li>Nothing on the site gets removed — the Pixel keeps firing exactly as it does today</li>
+        <li>CAPI is a <em>second</em>, separate channel, sent from HubSpot's server — not GTM
+        (GTM only runs in the browser, so it can't act on something that happens in the CRM
+        after the visit is over)</li>
+        <li>Matching doesn't rely on one click ID surviving — the lead's hashed email and phone
+        go along with it, and Meta matches on whichever identifiers it has</li>
+        <li>Email is one of the strongest signals precisely because it doesn't depend on a
+        cookie or browser session still being alive</li>
+        <li>Server-side CAPI matched by contact details is a well-documented pattern any
+        CRM-driven business uses to advertise on Meta</li>
+      </ul>
+    </div>
+    <div class="card cons">
+      <h3>Actually new — fair to be skeptical of</h3>
+      <ul>
+        <li>Collapsing the whole signal into <strong>one artificially delayed event</strong></li>
+        <li>...carrying a <strong>hand-built score</strong> we invented ourselves</li>
+        <li>...instead of sending each real pipeline event (Lead, MQL, MB, MH...) as it
+        naturally happens</li>
+        <li>This is the layer worth stress-testing before committing — not the tracking
+        plumbing underneath it</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <section id="compare">
