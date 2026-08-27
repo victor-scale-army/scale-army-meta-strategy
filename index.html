@@ -153,6 +153,19 @@
   }
   .phase-title{font-weight:700;font-family:'EB Garamond';font-size:1.05rem;margin-bottom:.5rem;}
 
+  .phase-block{
+    background:var(--cream-2);border:1px solid rgba(22,43,62,.12);
+    border-radius:14px;padding:1.7rem 1.8rem;margin-top:1.6rem;
+  }
+  .phase-header{display:flex;align-items:baseline;gap:.9rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+  .phase-tag{
+    font-family:'Poppins';font-weight:600;font-size:.75rem;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--rust);background:rgba(204,82,42,.1);
+    padding:.3rem .7rem;border-radius:999px;white-space:nowrap;
+  }
+  .phase-header h3{margin:0;}
+  ol.mini-steps.detailed li{margin-bottom:.9rem;font-size:.95rem;}
+
   ol.mini-steps{counter-reset:mini;list-style:none;padding:0;margin:.6rem 0 0;}
   ol.mini-steps li{
     counter-increment:mini;position:relative;padding-left:1.9rem;
@@ -388,28 +401,95 @@
 <section id="steps">
   <p class="kicker">Recommended steps</p>
   <h2>Step by step</h2>
-  <ol class="steps">
-    <li><span class="phase-title">Weeks 1–3 — Signal</span>
-    Check the Page ad-limit band · wire domain enrichment into step 1 of the form (unknowns pass
-    through) · HubSpot → Meta CAPI live, deduplicated against the pixel · fire the full 6-event
-    ladder for reporting · build the conversion-value table (placeholder values OK) · set the
-    Lead event to fire on a ~60-min delay with booking outcome attached · gate the booking
-    calendar on enrichment.</li>
-    <li><span class="phase-title">Weeks 3–5 — Structure</span>
-    Collapse into the single Evergreen campaign/ad set · switch bid strategy to maximize
-    conversion value on Lead · migrate existing (and graduated 94/95) creative in · establish
-    and backfill the Offer/Buyer/Pain/Angle/Proof/Format/Awareness/Destination naming
-    convention · set a weekly batch cadence for new creative (~10/week, not monthly dumps).</li>
-    <li><span class="phase-title">Weeks 5–10 — Stabilize</span>
-    Let it run without structural intervention · weekly monitoring only, no ad-level kills ·
-    confirm lead volume holds above 50/week post-switch · backfill-enrich historical HubSpot
-    leads to replace the placeholder value table · establish the real cost-per-booked-meeting
-    baseline.</li>
-    <li><span class="phase-title">Week 10+ — Explore</span>
-    Pre-register the first in-funnel offer test (hypothesis, 8–12 concepts, matched LP, kill/
-    graduate thresholds, all written down before spending a dollar) · read it in HubSpot by
-    landing page, not in Ads Manager.</li>
-  </ol>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-tag">Weeks 1–3</span>
+      <h3>Signal</h3>
+    </div>
+    <ol class="mini-steps detailed">
+      <li><strong>Check the Page ad-limit band.</strong> Meta caps active/in-review ads per Page
+      based on its highest-spending month (250 ads under $100K/mo, 1,000 under $1M) — that's our
+      real ceiling on active creative, not any ad-set number.</li>
+      <li><strong>Wire domain enrichment into step 1 of the form.</strong> Resolve company size
+      from the email domain the moment someone submits — before they ever reach the booking
+      page. Treat unresolved domains as pass-through, not a block: enrichment coverage is
+      weakest on exactly the small/local companies we most want.</li>
+      <li><strong>Get HubSpot → Meta CAPI live.</strong> Server-side, deduplicated against the
+      on-site Pixel, so Meta learns what happened after the form fill, not just the click.</li>
+      <li><strong>Fire the full 6-event ladder for reporting.</strong> Lead, Size-Qualified Lead,
+      Meeting Booked, Meeting Held, Opportunity, Closed Won — all six flow to Meta for reporting,
+      even though we'll only optimize bidding on one of them.</li>
+      <li><strong>Build the conversion-value table.</strong> Company-size band × booked-or-not →
+      a score. Placeholder values are fine to launch with — the shape of the curve (where it
+      peaks) matters far more than precise dollar figures.</li>
+      <li><strong>Set the Lead event to fire on a ~60-minute delay</strong>, with the booking
+      outcome attached. We wait to observe the real outcome instead of guessing — this costs
+      nothing since Meta's click attribution window is 7 days.</li>
+      <li><strong>Gate the booking calendar on enrichment.</strong> Under 10 US employees →
+      don't show the calendar. Protects AE time and makes "Meeting Booked" qualified by
+      construction.</li>
+    </ol>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-tag">Weeks 3–5</span>
+      <h3>Structure</h3>
+    </div>
+    <ol class="mini-steps detailed">
+      <li><strong>Collapse into the single Evergreen campaign/ad set.</strong> Consolidate the
+      account down to essentially one campaign, one ad set holding every established offer.</li>
+      <li><strong>Switch bid strategy to maximize conversion value on Lead.</strong> Meta chases
+      the total size/booking-weighted score, not just the most email addresses.</li>
+      <li><strong>Migrate existing creative in</strong> — including any winning creative from
+      the 94/95 Andromeda test, once its current learning window is judged.</li>
+      <li><strong>Establish and backfill the naming convention</strong>
+      (Offer/Buyer/Pain/Angle/Proof/Format/Awareness/Destination). Tag every creative across
+      these dimensions in the ad name itself, so persona/angle thinking still lives somewhere —
+      just in the taxonomy, not the account structure.</li>
+      <li><strong>Set a weekly batch cadence for new creative</strong> (~10/week, not monthly
+      dumps) — staggered cohorts get cleaner reads than dumping everything in at once.</li>
+    </ol>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-tag">Weeks 5–10</span>
+      <h3>Stabilize</h3>
+    </div>
+    <ol class="mini-steps detailed">
+      <li><strong>Let it run without structural intervention.</strong> Resist the urge to tinker
+      with the account once it's live.</li>
+      <li><strong>Weekly monitoring only — no ad-level kills.</strong> Don't pause ads for low
+      delivery or a bad attributed CPA; that's the system's verdict, not a mistake to fix.</li>
+      <li><strong>Confirm lead volume holds above 50/week post-switch.</strong> This is the
+      number the entire model depends on — if it drops below threshold, the consolidation stops
+      working.</li>
+      <li><strong>Backfill-enrich historical HubSpot leads</strong> to replace the placeholder
+      value table with real booking/close rates by company-size band.</li>
+      <li><strong>Establish the real cost-per-booked-meeting baseline</strong> that future tests
+      will be judged against.</li>
+    </ol>
+  </div>
+
+  <div class="phase-block">
+    <div class="phase-header">
+      <span class="phase-tag">Week 10+</span>
+      <h3>Explore</h3>
+    </div>
+    <ol class="mini-steps detailed">
+      <li><strong>Pre-register the first in-funnel offer test.</strong> Before spending a
+      dollar: write down the hypothesis, required creative volume, landing page, duration, and
+      kill/graduate thresholds.</li>
+      <li><strong>Build 8–12 meaningfully different concepts</strong> and a matched, uniquely
+      tagged landing page — enough distinct concepts for a statistically readable result, and an
+      LP that continues the conversation the ad started.</li>
+      <li><strong>Launch into evergreen and read it in HubSpot by landing page</strong> — not in
+      Ads Manager. A new offer producing cheap, low-value leads will still look busy in Meta
+      while contributing nothing.</li>
+    </ol>
+  </div>
 </section>
 
 <div class="footer-nav">
