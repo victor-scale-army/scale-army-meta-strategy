@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meta Ads Structure — Decision Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fef2de;
+    --cream-2:#f7e7cb;
+    --navy:#162b3e;
+    --navy-2:#0d1b27;
+    --orange:#ff6432;
+    --rust:#cc522a;
+    --ink:#162b3e;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--navy);
+    font-family:'Poppins',sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3,.serif{
+    font-family:'EB Garamond',serif;
+    font-weight:700;
+    letter-spacing:.2px;
+  }
+  section{
+    padding:5.5rem 8vw 5rem;
+    border-bottom:1px solid rgba(22,43,62,.08);
+    position:relative;
+  }
+  section.dark{
+    background:var(--navy);
+    color:var(--cream);
+  }
+  section.dark h1, section.dark h2, section.dark h3{color:var(--cream);}
+  .kicker{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:.78rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--rust);
+    margin:0 0 .8rem;
+  }
+  section.dark .kicker{color:var(--orange);}
+  h1{font-size:clamp(2.1rem,4.5vw,3.4rem);margin:0 0 1rem;line-height:1.08;}
+  h2{font-size:clamp(1.6rem,3vw,2.3rem);margin:0 0 1.4rem;}
+  h3{font-size:1.15rem;margin:0 0 .5rem;}
+  p{margin:0 0 1rem;max-width:66ch;}
+  .lede{font-size:1.15rem;max-width:62ch;opacity:.92;}
+  .logo{height:34px;display:block;margin-bottom:2.2rem;}
+  .badge{
+    display:inline-block;
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:.3rem .7rem;
+    border-radius:999px;
+    margin-bottom:1rem;
+  }
+  .badge.validated{background:var(--navy);color:var(--cream);}
+  .badge.testing{background:var(--orange);color:var(--navy-2);}
+  .badge.proposed{background:var(--rust);color:var(--cream);}
+
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;}
+  .hero .meta{font-size:.95rem;opacity:.75;margin-top:2rem;}
+  .nav-dots{
+    position:fixed;right:1.4rem;top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:.6rem;z-index:50;
+  }
+  .nav-dots a{
+    width:9px;height:9px;border-radius:50%;background:rgba(22,43,62,.25);
+    display:block;transition:.2s;
+  }
+  .nav-dots a:hover{background:var(--rust);}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:2rem;}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem;margin-top:2rem;}
+  @media(max-width:900px){.grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--cream-2);
+    border:1px solid rgba(22,43,62,.12);
+    border-radius:14px;
+    padding:1.5rem 1.6rem;
+  }
+  section.dark .card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
+
+  .card.pros{border-left:4px solid #2f7a4d;}
+  .card.cons{border-left:4px solid var(--rust);}
+  .card ul{margin:.4rem 0 0;padding-left:1.15rem;}
+  .card li{margin-bottom:.45rem;font-size:.95rem;}
+
+  table{width:100%;border-collapse:collapse;margin-top:1.2rem;font-size:.92rem;}
+  th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid rgba(22,43,62,.12);vertical-align:top;}
+  th{font-family:'Poppins';font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--rust);}
+  section.dark th,section.dark td{border-color:rgba(255,255,255,.15);}
+  section.dark th{color:var(--orange);}
+
+  .diagram{
+    background:var(--navy);color:var(--cream);
+    border-radius:14px;padding:1.8rem;margin-top:1.6rem;
+    font-family:'Poppins';font-size:.92rem;
+  }
+  .diagram .box{
+    display:inline-block;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.25);border-radius:8px;
+    padding:.5rem .8rem;margin:.25rem;font-size:.85rem;
+  }
+  .diagram .arrow{opacity:.5;margin:0 .3rem;}
+
+  .stat-row{display:flex;gap:1.8rem;flex-wrap:wrap;margin-top:1.6rem;}
+  .stat{min-width:150px;}
+  .stat .num{font-family:'EB Garamond';font-weight:800;font-size:2.1rem;color:var(--rust);line-height:1;}
+  section.dark .stat .num{color:var(--orange);}
+  .stat .label{font-size:.8rem;opacity:.75;margin-top:.3rem;}
+
+  .callout{
+    border-left:4px solid var(--rust);
+    background:rgba(204,82,42,.08);
+    padding:1.1rem 1.3rem;border-radius:0 10px 10px 0;margin-top:1.4rem;
+  }
+  section.dark .callout{background:rgba(255,100,50,.1);}
+  .callout strong{color:var(--rust);}
+  section.dark .callout strong{color:var(--orange);}
+
+  .rec-box{
+    background:var(--navy);color:var(--cream);
+    border-radius:16px;padding:2.2rem 2.4rem;margin-top:1.8rem;
+  }
+  .rec-box h3{color:var(--orange);font-size:1rem;text-transform:uppercase;letter-spacing:.08em;font-family:'Poppins';font-weight:600;}
+  .rec-box p{max-width:none;}
+
+  ol.steps{counter-reset:step;list-style:none;padding:0;margin-top:1.6rem;}
+  ol.steps li{
+    counter-increment:step;position:relative;padding-left:2.6rem;margin-bottom:1.1rem;
+  }
+  ol.steps li::before{
+    content:counter(step);position:absolute;left:0;top:-2px;
+    width:1.9rem;height:1.9rem;border-radius:50%;
+    background:var(--rust);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'EB Garamond';font-weight:700;font-size:.95rem;
+  }
+  .phase-title{font-weight:700;font-family:'EB Garamond';font-size:1.05rem;margin-bottom:.5rem;}
+
+  .footer-nav{display:flex;justify-content:space-between;align-items:center;padding:2rem 8vw;font-size:.85rem;opacity:.7;}
+  code{background:rgba(22,43,62,.08);padding:.1rem .35rem;border-radius:4px;font-size:.85em;}
+  section.dark code{background:rgba(255,255,255,.12);}
+  a{color:var(--rust);}
+  section.dark a{color:var(--orange);}
+</style>
+</head>
+<body>
+
+<nav class="nav-dots">
+  <a href="#hero" title="Start"></a>
+  <a href="#validated" title="Validated model"></a>
+  <a href="#testing" title="Andromeda test"></a>
+  <a href="#evidence" title="Live evidence"></a>
+  <a href="#proposed" title="Evergreen proposal"></a>
+  <a href="#compare" title="Comparison"></a>
+  <a href="#conflict" title="Conflict"></a>
+  <a href="#recommendation" title="Recommendation"></a>
+  <a href="#steps" title="Next steps"></a>
+</nav>
+
+<section id="hero" class="hero">
+  <img src="assets/scalearmy-logo.png" alt="Scale Army" class="logo">
+  <p class="kicker">Meta Ads · Decision Brief</p>
+  <h1>Three ways to structure the account —<br>and which one we should run</h1>
+  <p class="lede">Where we are today, what we're mid-test on, and what Alex just proposed —
+  side by side, with the actual numbers from our own account, so we can make one decision
+  instead of running three philosophies at once.</p>
+  <p class="meta">Prepared for the team review meeting · 2026-08-27</p>
+</section>
+
+<section id="validated">
+  <p class="kicker">Model A</p>
+  <span class="badge validated">Validated · Live since ~day one</span>
+  <h2>One campaign per role, one creative per ad set</h2>
+  <p>Before this existed, there was no naming standard at all — a bad-performing campaign just
+  got duplicated and left to the algorithm. This model replaced that: a real naming convention,
+  a real structure, rolled out across the entire account.</p>
+  <div class="diagram">
+    <span class="box">Campaign = Role type<br><small>Marketing · AI · Engineering</small></span>
+    <span class="arrow">→</span>
+    <span class="box">Ad Set = 1 creative</span>
+    <span class="arrow">→</span>
+    <span class="box">Budget = ABO</span>
+    <span class="arrow">→</span>
+    <span class="box">Analysis = per creative</span>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><div class="num">~98</div><div class="label">campaigns in the account today</div></div>
+    <div class="stat"><div class="num">79 / 82</div><div class="label">reference campaigns running this model live</div></div>
+    <div class="stat"><div class="num">ABO</div><div class="label">manual budget control, spread across creatives</div></div>
+  </div>
+  <p style="margin-top:1.4rem;"><strong>Verdict so far:</strong> works, not perfectly — the reason we started testing something else.</p>
+</section>
+
+<section id="testing">
+  <p class="kicker">Model B</p>
+  <span class="badge testing">Testing now · Campaigns 94 &amp; 95</span>
+  <h2>Concept-based ad sets (the "Andromeda" test)</h2>
+  <p>Sales found a video explaining how Meta's Andromeda algorithm actually reads creative as
+  the targeting signal. The implication: one ad set should hold one concept — one buyer persona
+  × one messaging angle — not a mix of audiences. Our creative strategist reverse-engineered a
+  full <a href="https://docs.google.com/spreadsheets/d/1eA_olTCQohTle3_i50jT07fN9RokHDWUMlWLQ8m9ELc/edit" target="_blank">persona/angle map</a> from existing scripts to feed it.</p>
+  <div class="diagram">
+    <span class="box">Campaign = Role type<br><small>unchanged</small></span>
+    <span class="arrow">→</span>
+    <span class="box">Ad Set = 1 concept<br><small>persona × angle</small></span>
+    <span class="arrow">→</span>
+    <span class="box">e.g. AS01_CPT01_<br>Sales_Leader_Problem_Agitation</span>
+  </div>
+  <p style="margin-top:1.2rem;">Testing priority the video argues for — and that most teams get backwards:</p>
+  <p class="serif" style="font-size:1.2rem;color:var(--rust);">Angle → Offer → Persona → Format</p>
+</section>
+
+<section id="evidence" class="dark">
+  <p class="kicker">What's actually happening in the account</p>
+  <h2>The concept test hasn't cleared learning — anywhere</h2>
+  <p class="lede">Pulled straight from Ads Manager, last 30 days, for the two campaigns running
+  the concept-based structure.</p>
+  <table>
+    <tr><th>Campaign</th><th>Ad sets</th><th>Status</th><th>Results (30d)</th><th>Spend (30d)</th></tr>
+    <tr><td>94 — Engineering roles</td><td>2</td><td>Learning (both)</td><td>0</td><td>$1,533.52</td></tr>
+    <tr><td>95 — Marketing/Sales roles</td><td>6</td><td>Learning (all six)</td><td>9 total</td><td>$6,449.24</td></tr>
+    <tr><td><strong>Combined</strong></td><td><strong>8</strong></td><td><strong>0 of 8 have exited learning</strong></td><td><strong>9</strong></td><td><strong>$7,982.76</strong></td></tr>
+  </table>
+  <div class="callout">
+    <strong>9 conversions across 8 ad sets in 30 days ≈ 0.26 results/ad-set/week.</strong>
+    Meta needs roughly 50 optimization events per ad set per week to exit learning.
+    This isn't a hypothetical risk from the proposal below — it's what's on screen right now.
+  </div>
+</section>
+
+<section id="proposed">
+  <p class="kicker">Model C</p>
+  <span class="badge proposed">Proposed · Not decided · Alex, CEO</span>
+  <h2>Evergreen + Exploration</h2>
+  <p>Alex and Clara were already uneasy about the concept-segmentation direction ("why not just
+  run one asset") and Alex spent a morning researching it properly. His thesis: consolidate
+  almost everything into <strong>one ad set</strong>, and fix the signal quality feeding it
+  instead of fixing it with more structure.</p>
+  <div class="diagram">
+    <span class="box">Campaign 1 — Evergreen<br><small>~80–90%+ of spend, all offers mixed, ~$100K/mo</small></span>
+    <span class="arrow">+</span>
+    <span class="box">Campaign 2 — Exploration<br><small>rare, only for offers that can't share the funnel</small></span>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>The mechanism that makes it safe</h3>
+      <p style="font-size:.93rem;">Optimize on the shallow <code>Lead</code> event (only one with volume —
+      ~65/wk vs. the ~50/wk threshold), but delay firing it ~60 min and attach a
+      <strong>conversion value</strong>: a hump-shaped curve by company size (peaks ~50–200
+      employees, falls off for enterprise) × whether they booked.</p>
+    </div>
+    <div class="card">
+      <h3>What it costs to turn on</h3>
+      <p style="font-size:.93rem;">HubSpot→Meta CAPI, domain-based company-size enrichment,
+      a gated booking calendar, and a value table — all live <em>before</em> any structural
+      change, per the doc's own rule.</p>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <p class="kicker">Side by side</p>
+  <h2>Pros, cons, risks</h2>
+  <div class="grid3">
+    <div class="card">
+      <h3>A · Validated</h3>
+      <ul>
+        <li><strong>+</strong> Proven across ~98 campaigns; team already fluent in it</li>
+        <li><strong>+</strong> ABO spreads risk across creatives (portfolio-safe)</li>
+        <li><strong>−</strong> Doesn't encode buyer persona/angle/quality at all</li>
+        <li><strong>−</strong> Many small campaigns already fragment volume account-wide</li>
+        <li><strong>−</strong> Judges performance ad-by-ad, which both other models agree is unreliable</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>B · Andromeda test</h3>
+      <ul>
+        <li><strong>+</strong> Matches documented Meta mechanics (creative = targeting)</li>
+        <li><strong>+</strong> Concrete persona/angle bank already built to fund it</li>
+        <li><strong>−</strong> Directly fragments volume below the learning threshold</li>
+        <li><strong>−</strong> Live evidence: 0 of 8 test ad sets have exited learning</li>
+        <li><strong>−</strong> Heavy creative load per concept (10–20+ ads to validate one)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>C · Evergreen (proposed)</h3>
+      <ul>
+        <li><strong>+</strong> Only model built from our actual weekly volume numbers</li>
+        <li><strong>+</strong> Encodes lead quality directly (size + booking → value)</li>
+        <li><strong>+</strong> Comes with a full rollout plan, do-not list, kill/graduate rules</li>
+        <li><strong>−</strong> Real martech lift (CAPI, enrichment, value table) before launch</li>
+        <li><strong>−</strong> Conflicts with the just-announced scheduling tool (see next)</li>
+        <li><strong>−</strong> Risk of offer cannibalization inside one shared ad set</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="conflict" class="dark">
+  <p class="kicker">Needs resolving before anything ships</p>
+  <h2>Two decisions from the same person, in conflict</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>The scheduling tool (this week)</h3>
+      <p style="font-size:.95rem;">New internal booking form asks the lead to
+      <strong>self-report company size</strong>. Under 10 employees → disqualified via GTM.</p>
+    </div>
+    <div class="card">
+      <h3>§2.2a of Alex's own doc</h3>
+      <p style="font-size:.95rem;">"Do not use a self-reported company size field. Anyone
+      motivated to book will select whatever band gets them through... <strong>Enrich off the
+      domain instead</strong> — more accurate, invisible to the user, available in the same
+      session."</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:1.8rem;">
+    <strong>This isn't a nuance to quietly resolve on our own.</strong> Building the scheduling
+    tool on self-report now, only to redo it for domain enrichment next month, is wasted
+    engineering effort either way. Needs a direct answer from Alex.
+  </div>
+</section>
+
+<section id="recommendation">
+  <p class="kicker">Recommendation</p>
+  <h2>Move toward Evergreen — but sequenced, not switched overnight</h2>
+  <div class="rec-box">
+    <h3>Do this, in this order</h3>
+    <p>The account evidence already backs Alex's math: 8 ad sets, $7,982 spent, 9 conversions,
+    zero exits from learning. That's not a future risk — it's this month. Of the three models,
+    Evergreen is the only one designed around our actual weekly volume rather than general best
+    practice, and it comes with the most complete operating plan (rollout, do-not list, kill/graduate
+    rules).</p>
+    <p><strong>But</strong> the doc itself is explicit: no structural change before the signal
+    work (CAPI, enrichment, value curve) is live. Collapsing to one ad set today, on top of a
+    shallow event with no value model, would just consolidate spend behind bad signal faster.</p>
+    <p>Don't kill 94/95 mid-air either — let their current learning window finish or fold their
+    winning creative into evergreen once it's live, per the doc's own graduation logic. The
+    persona/angle map isn't wasted — it becomes the creative taxonomy and naming layer, not the
+    ad set structure.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <p class="kicker">If we agree</p>
+  <h2>Step by step</h2>
+  <ol class="steps">
+    <li><span class="phase-title">Week 0 — Resolve the conflict</span>
+    Get a direct answer from Alex: self-reported size (scheduling tool) or domain enrichment
+    (his own doc) as the source of truth for company size. Don't build both.</li>
+    <li><span class="phase-title">Weeks 1–3 — Signal</span>
+    Check the Page ad-limit band · wire domain enrichment into step 1 of the form (unknowns pass
+    through) · HubSpot → Meta CAPI live, deduplicated against the pixel · fire the full 6-event
+    ladder for reporting · build the conversion-value table (placeholder values OK) · set the
+    Lead event to fire on a ~60-min delay with booking outcome attached · gate the booking
+    calendar on enrichment.</li>
+    <li><span class="phase-title">Weeks 3–5 — Structure</span>
+    Collapse into the single Evergreen campaign/ad set · switch bid strategy to maximize
+    conversion value on Lead · migrate existing (and graduated 94/95) creative in · establish
+    and backfill the Offer/Buyer/Pain/Angle/Proof/Format/Awareness/Destination naming
+    convention · set a weekly batch cadence for new creative (~10/week, not monthly dumps).</li>
+    <li><span class="phase-title">Weeks 5–10 — Stabilize</span>
+    Let it run without structural intervention · weekly monitoring only, no ad-level kills ·
+    confirm lead volume holds above 50/week post-switch · backfill-enrich historical HubSpot
+    leads to replace the placeholder value table · establish the real cost-per-booked-meeting
+    baseline.</li>
+    <li><span class="phase-title">Week 10+ — Explore</span>
+    Pre-register the first in-funnel offer test (hypothesis, 8–12 concepts, matched LP, kill/
+    graduate thresholds, all written down before spending a dollar) · read it in HubSpot by
+    landing page, not in Ads Manager.</li>
+  </ol>
+</section>
+
+<div class="footer-nav">
+  <span>Scale Army · Meta Paid Strategy</span>
+  <span>Full source docs in the paid-media vault</span>
+</div>
+
+</body>
+</html>
