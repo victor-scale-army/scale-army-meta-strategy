@@ -390,18 +390,16 @@
     <div class="card cons">
       <h3>Where it breaks for this plan</h3>
       <ul>
-        <li><strong>The value is static per event, not per lead.</strong> You configure a
-        form-submission event and "specify a monetary value for your event" — one number,
-        applied to every instance. The plan needs 14 different values depending on size band
-        × booked.</li>
-        <li><strong>No delay.</strong> Events fire immediately on trigger. The plan needs
-        ~60 minutes so the booking outcome is known before sending.</li>
-        <li><strong>Lifecycle-stage events carry no value field at all</strong> — and those
-        are the ones a workflow could naturally delay.</li>
+        <li><strong>Form-submission events: one fixed value, and that's it.</strong> You
+        configure the event and "specify a monetary value for your event" — a single number
+        applied to every lead that triggers it. There is no way to vary it per lead, so the
+        14-value table can't be expressed. They also fire immediately, with no delay.</li>
+        <li><strong>Lifecycle-stage events: no value field at all.</strong> Nothing to
+        weight with.</li>
       </ul>
-      <p style="font-size:.93rem;margin-top:.9rem;"><strong>The bind:</strong> each native
-      path is missing exactly the half the other one has. Form events have a value but no
-      delay. Lifecycle events can be delayed but have no value.</p>
+      <p style="font-size:.93rem;margin-top:.9rem;"><strong>Neither native option can carry a
+      per-lead value.</strong> The weighted-score model can't be built on HubSpot's native
+      integration.</p>
     </div>
   </div>
 
