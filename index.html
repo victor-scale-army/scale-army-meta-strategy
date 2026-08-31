@@ -413,51 +413,69 @@
     is broken and needs fixing regardless of which model we pick.
   </div>
 
-  <h3 style="margin-top:2.5rem;">The alternative, if we go this route</h3>
-  <p>Not exotic — it's the standard workaround, and it's what actually gives full control over
-  timing and value:</p>
+  <h3 style="margin-top:2.5rem;">The simple path — no custom code, no new tools</h3>
+  <p>There is a native way to get most of what this plan wants. We create a
+  <strong>qualified-lead lifecycle stage</strong> (like the MQL we already have), let a HubSpot
+  workflow move leads into it once enrichment confirms the company is big enough, and sync that
+  lifecycle stage to Meta as the conversion event.</p>
   <div class="diagram">
-    <span class="box">Form submitted<br><small>workflow trigger</small></span>
+    <span class="box">Lead submits form</span>
     <span class="arrow">→</span>
-    <span class="box">Wait ~60 min<br><small>native workflow delay</small></span>
+    <span class="box">Enrichment runs<br><small>company size resolves</small></span>
     <span class="arrow">→</span>
-    <span class="box">Compute the value<br><small>size band × booked</small></span>
+    <span class="box">Workflow moves lead to<br>"Qualified Lead" stage</span>
     <span class="arrow">→</span>
-    <span class="box">POST to Meta CAPI<br><small>custom code action or webhook</small></span>
+    <span class="box">HubSpot syncs it to Meta<br><small>native CAPI — no code</small></span>
   </div>
   <div class="grid2">
-    <div class="card cons">
-      <h3>What this requires — and needs checking today</h3>
+    <div class="card pros">
+      <h3>Why this is attractive</h3>
       <ul>
-        <li><strong>Webhook actions in workflows require Operations Hub Professional.</strong>
-        Custom code actions require Data Hub Professional or Enterprise.</li>
-        <li><strong>We need to confirm which tier our portal actually has.</strong> If we have
-        neither, this path is blocked until we buy one — a real dependency, not a detail.</li>
+        <li><strong>Fully native.</strong> No custom code, no webhook, no extra HubSpot tier
+        to buy, no third-party connector. Roughly 1–2 hours of setup.</li>
+        <li><strong>The delay problem disappears.</strong> We don't need an artificial 60-minute
+        wait — the event fires exactly when qualification actually resolves, whenever that is.</li>
+        <li><strong>Quality is baked into the event itself</strong> rather than into a fragile
+        score. A "Qualified Lead" event only fires for leads that passed the size check.</li>
       </ul>
     </div>
-    <div class="card pros">
-      <h3>The fallback if we don't have those tiers</h3>
+    <div class="card cons">
+      <h3>What we give up — and the catch</h3>
       <ul>
-        <li>A small self-hosted service receives the lead data and calls Meta's Conversions
-        API itself.</li>
-        <li>This isn't greenfield for us — the Scale Army Mkt Dashboard backend already talks
-        to both the Meta Marketing API and HubSpot.</li>
-        <li>More control, but it becomes something we own and maintain.</li>
+        <li><strong>No weighting at all.</strong> Lifecycle-stage events carry no value field,
+        so every qualified lead counts the same. No size bands, no hump curve, no
+        booked-vs-not multiplier.</li>
+        <li><strong>The catch is volume.</strong> By the proposal's own numbers, a
+        size-qualified event runs <strong>~45/week — below the ~50/week learning
+        threshold</strong>, while the raw Lead event runs ~70/week and clears it.</li>
+        <li><strong>To verify:</strong> HubSpot's docs say lifecycle syncing works with "lead
+        generation campaigns". We need to confirm that covers our Leads-objective/landing-page
+        campaigns and not only Meta instant-form Lead Ads.</li>
       </ul>
     </div>
   </div>
 
+  <div class="callout">
+    <strong>This is the same dilemma, not an escape from it.</strong> Optimizing on the raw
+    Lead event buys volume but no quality signal. Optimizing on a qualified-lead event buys
+    quality but drops below the learning threshold. The weighted-value scheme was Alex's attempt
+    to have both at once — and the feasibility work above shows that attempt costs custom code,
+    a possible HubSpot upgrade, and depends on value optimization even being eligible at our
+    volume. <strong>Given that eligibility is unconfirmed, the simple path may give up far less
+    in practice than it appears to on paper.</strong>
+  </div>
+
+  <h3 style="margin-top:2.5rem;">If we do insist on per-lead weights</h3>
+  <p>Ranked options, for completeness — all of them are more machinery than the path above:</p>
   <table>
     <tr><th>Option</th><th>Effort</th><th>Cost</th><th>Does it meet the requirement?</th></tr>
-    <tr><td><strong>1. HubSpot workflow → 60-min delay → custom code → CAPI</strong></td>
+    <tr><td><strong>1. HubSpot workflow → delay → custom code → CAPI</strong></td>
       <td>4–8h</td><td>Needs Ops/Data Hub Pro</td><td>Yes — full control of the value</td></tr>
     <tr><td>2. Zapier / Make → Meta Conversions</td><td>2–4h</td><td>~$30–70/mo</td>
       <td>Likely, but dynamic value undocumented</td></tr>
     <tr><td>3. Small custom backend (HubSpot webhook → our service)</td><td>1–2 days</td>
       <td>~$0 hosting</td><td>Yes — but we own uptime</td></tr>
-    <tr><td>4. HubSpot native CAPI as-is</td><td>1–2h</td><td>$0</td>
-      <td><strong>No</strong> — static value only</td></tr>
-    <tr><td>5. Server-side GTM + Meta CAPI tag</td><td>6–12h</td><td>~$20/mo</td>
+    <tr><td>4. Server-side GTM + Meta CAPI tag</td><td>6–12h</td><td>~$20/mo</td>
       <td>Yes, but it's option 1 plus extra hops</td></tr>
   </table>
 
