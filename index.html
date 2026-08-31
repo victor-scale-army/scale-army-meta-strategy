@@ -190,12 +190,8 @@
 
 <nav class="nav-dots">
   <a href="#hero" title="Start"></a>
-  <a href="#validated" title="Validated model"></a>
-  <a href="#testing" title="Andromeda test"></a>
-  <a href="#evidence" title="Live evidence"></a>
   <a href="#proposed" title="Evergreen proposal"></a>
   <a href="#feasibility" title="Feasibility check"></a>
-  <a href="#weights" title="Weighting objection"></a>
   <a href="#burn" title="Budget impact"></a>
   <a href="#compare" title="Comparison"></a>
   <a href="#steps" title="Next steps"></a>
@@ -226,53 +222,6 @@
   </div>
 </section>
 
-<section id="validated">
-  <p class="kicker">Model A</p>
-  <span class="badge validated">Current · Validated</span>
-  <h2>One campaign per role, one creative per ad set</h2>
-  <div class="diagram">
-    <span class="box">Campaign = Role type<br><small>Marketing · AI · Engineering</small></span>
-    <span class="arrow">→</span>
-    <span class="box">Ad Set = 1 creative</span>
-    <span class="arrow">→</span>
-    <span class="box">Budget = ABO</span>
-    <span class="arrow">→</span>
-    <span class="box">Analysis = per creative</span>
-  </div>
-  <div class="stat-row">
-    <div class="stat"><div class="num">79 / 82</div><div class="label">reference campaigns running this model live</div></div>
-    <div class="stat"><div class="num">ABO</div><div class="label">manual budget control, spread across creatives</div></div>
-  </div>
-  <p style="margin-top:1.4rem;"><strong>Verdict so far:</strong> works, not perfectly — the reason we started testing something else.</p>
-</section>
-
-<section id="testing">
-  <p class="kicker">Model B</p>
-  <span class="badge testing">Testing now · Campaigns 94 &amp; 95</span>
-  <h2>Concept-based ad sets (the "Andromeda" test)</h2>
-  <div class="diagram">
-    <span class="box">Campaign = Role type<br><small>unchanged</small></span>
-    <span class="arrow">→</span>
-    <span class="box">Ad Set = 1 concept<br><small>persona × angle</small></span>
-    <span class="arrow">→</span>
-    <span class="box">Several creatives<br><small>all on that same concept, in the same ad set</small></span>
-  </div>
-</section>
-
-<section id="evidence">
-  <p class="kicker">What's actually happening</p>
-  <h2>Real HubSpot funnel outcomes, same 30-day window</h2>
-  <table>
-    <tr><th>Campaign</th><th>Spend</th><th>HS Leads</th><th>MB</th><th>MQL</th><th>MH</th><th>SQL</th><th>EL Sent</th><th>EL Signed</th></tr>
-    <tr><td colspan="9" style="font-weight:600;color:var(--rust);padding-top:1rem;">Validated model</td></tr>
-    <tr><td>79 — Marketing Teams</td><td>$37,499.65</td><td>110</td><td>44</td><td>28</td><td>23</td><td>3</td><td>7</td><td>2</td></tr>
-    <tr><td>82 — AI Automation Specialist</td><td>$52,833.61</td><td>93</td><td>50</td><td>38</td><td>28</td><td>11</td><td>12</td><td>4</td></tr>
-    <tr><td colspan="9" style="font-weight:600;color:var(--rust);padding-top:1rem;">Andromeda concept test</td></tr>
-    <tr><td>94 — Engineering</td><td>$1,533.52</td><td>2</td><td>0</td><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-    <tr><td>95 — AI Implementation Specialist</td><td>$6,449.24</td><td>15</td><td>6</td><td>5</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-  </table>
-</section>
-
 <section id="proposed">
   <p class="kicker">Model C</p>
   <span class="badge proposed">Proposed by Alex</span>
@@ -289,52 +238,23 @@
     <span class="arrow">+</span>
     <span class="box">Campaign 2 — Exploration<br><small>rare, only for offers that can't share the funnel</small></span>
   </div>
-  <div class="grid2">
-    <div class="card">
-      <h3>What Alex wants to happen, step by step</h3>
-      <ol class="mini-steps">
-        <li>Someone fills out our lead form.</li>
-        <li>We wait about an hour before telling Meta about it.</li>
-        <li>In that hour, we find out two things: how big their company is, and whether they
-        actually booked a call.</li>
-        <li>We tell Meta about the lead — but now attach a <strong>score</strong>: bigger
-        companies score higher, up to a sweet spot (~50–200 employees), then score
-        <em>lower again</em> for huge enterprises. Booking a call scores much higher than not
-        booking.</li>
-        <li>We tell Meta to spend our budget chasing the <strong>highest total score</strong>,
-        not just the most leads.</li>
-      </ol>
-    </div>
-    <div class="card">
-      <h3>What we'd actually need to do</h3>
-      <ol class="mini-steps">
-        <li>Verify what's really connected today — a real server-side integration (HubSpot's
-        native Meta Ads tool), or just a browser-side Pixel via GTM. They are not the same
-        thing, and only the first can carry data that resolves after the visit.</li>
-        <li>If it isn't server-side yet, connect it — configured to match leads by
-        <strong>email/phone</strong>, not only a click ID.</li>
-        <li>Keep the on-site Pixel running as-is — this doesn't replace it, it adds a
-        second, more reliable channel alongside it.</li>
-        <li>Get a real answer on the enrichment tool's failure rate before betting this on it
-        — <strong>already requested from Elena</strong>. "Failure" here means both cases: the
-        tool running out of credits, <em>and</em> the tool returning a result with no company
-        size attached. Both leave us with no size to score on.</li>
-        <li>Build the value table — the size × booked → score lookup all of this feeds.</li>
-      </ol>
-    </div>
+  <div class="card" style="margin-top:1.6rem;">
+    <h3>What Alex wants to happen, step by step</h3>
+    <ol class="mini-steps">
+      <li>Someone fills out our lead form.</li>
+      <li>We wait about an hour before telling Meta about it.</li>
+      <li>In that hour, we find out two things: how big their company is, and whether they
+      actually booked a call.</li>
+      <li>We tell Meta about the lead — but now attach a <strong>score</strong>: bigger
+      companies score higher, up to a sweet spot (~50–200 employees), then score
+      <em>lower again</em> for huge enterprises. Booking a call scores much higher than not
+      booking.</li>
+      <li>We tell Meta to spend our budget chasing the <strong>highest total score</strong>,
+      not just the most leads.</li>
+    </ol>
   </div>
 
-  <div class="callout" style="margin-top:1.8rem;">
-    <strong>How the event actually reaches Meta.</strong> This part sounds unusual, so here's
-    the mechanism plainly.
-  </div>
-  <div class="diagram">
-    <span class="box">Pixel fires in browser<br><small>real-time, while they're on the site — unchanged</small></span>
-    <span class="arrow">+</span>
-    <span class="box">HubSpot sends CAPI event later<br><small>server-side, whenever size/booking is known</small></span>
-    <span class="arrow">→</span>
-    <span class="box">Meta matches both<br><small>via email, phone, IP — not only a click ID</small></span>
-  </div>
+  <h3 style="margin-top:2.5rem;">Which parts of this are normal, and which aren't</h3>
   <div class="grid2">
     <div class="card pros">
       <h3>Standard — not new</h3>
@@ -396,6 +316,10 @@
         14-value table can't be expressed. They also fire immediately, with no delay.</li>
         <li><strong>Lifecycle-stage events: no value field at all.</strong> Nothing to
         weight with.</li>
+        <li><strong>And the enrichment isn't reliable enough to score on.</strong> Per Elena,
+        in August we <strong>could not find company size for 96 of 283 leads</strong> — only
+        187 resolved. That's a <strong>34% miss rate</strong> on the single input the whole
+        scoring model depends on.</li>
       </ul>
       <p style="font-size:.93rem;margin-top:.9rem;"><strong>Neither native option can carry a
       per-lead value.</strong> The weighted-score model can't be built on HubSpot's native
@@ -403,7 +327,8 @@
     </div>
   </div>
 
-  <h3 style="margin-top:2.5rem;">The simple path — no custom code, no new tools</h3>
+  <h2 style="margin-top:3rem;">The alternative</h2>
+  <h3>The simple path — no custom code, no new tools</h3>
   <p>There is a native way to get most of what this plan wants. We create a
   <strong>qualified-lead lifecycle stage</strong> (like the MQL we already have), let a HubSpot
   workflow move leads into it once enrichment confirms the company is big enough, and sync that
@@ -437,124 +362,13 @@
         booked-vs-not multiplier.</li>
         <li><strong>The catch is volume.</strong> By the proposal's own numbers, a
         size-qualified event runs <strong>~45/week — below the ~50/week learning
-        threshold</strong>, while the raw Lead event runs ~70/week and clears it.</li>
-        <li><strong>To verify:</strong> HubSpot's docs say lifecycle syncing works with "lead
-        generation campaigns". We need to confirm that covers our Leads-objective/landing-page
-        campaigns and not only Meta instant-form Lead Ads.</li>
+        threshold</strong>, while the raw Lead event runs ~70/week and clears it. And the 34%
+        enrichment miss rate pushes it lower still: a lead with no company size can't enter
+        the qualified stage at all.</li>
       </ul>
     </div>
   </div>
 
-  <div class="callout">
-    <strong>This is the same dilemma, not an escape from it.</strong> Optimizing on the raw
-    Lead event buys volume but no quality signal. Optimizing on a qualified-lead event buys
-    quality but drops below the learning threshold. The weighted-value scheme was Alex's attempt
-    to have both at once — and the feasibility work above shows that attempt costs custom code,
-    a possible HubSpot upgrade, and depends on value optimization even being eligible at our
-    volume. <strong>Given that eligibility is unconfirmed, the simple path may give up far less
-    in practice than it appears to on paper.</strong>
-  </div>
-
-  <h3 style="margin-top:2.5rem;">If we do insist on per-lead weights</h3>
-  <p>Ranked options, for completeness — all of them are more machinery than the path above:</p>
-  <table>
-    <tr><th>Option</th><th>Effort</th><th>Cost</th><th>Does it meet the requirement?</th></tr>
-    <tr><td><strong>1. HubSpot workflow → delay → custom code → CAPI</strong></td>
-      <td>4–8h</td><td>Needs Ops/Data Hub Pro</td><td>Yes — full control of the value</td></tr>
-    <tr><td>2. Zapier / Make → Meta Conversions</td><td>2–4h</td><td>~$30–70/mo</td>
-      <td>Likely, but dynamic value undocumented</td></tr>
-    <tr><td>3. Small custom backend (HubSpot webhook → our service)</td><td>1–2 days</td>
-      <td>~$0 hosting</td><td>Yes — but we own uptime</td></tr>
-    <tr><td>4. Server-side GTM + Meta CAPI tag</td><td>6–12h</td><td>~$20/mo</td>
-      <td>Yes, but it's option 1 plus extra hops</td></tr>
-  </table>
-
-  <div class="grid2" style="margin-top:2rem;">
-    <div class="card pros">
-      <h3>Two things that are NOT problems</h3>
-      <ul>
-        <li><strong>The 60-minute delay is fine.</strong> Meta accepts an
-        <code>event_time</code> up to <strong>7 days</strong> old. An hour is well inside the
-        window — this part of the plan is sound.</li>
-        <li><strong>Deduplication is safe.</strong> Meta only dedupes when
-        <code>event_id</code> <em>and</em> <code>event_name</code> match within 48 hours. A
-        distinctly named CRM event won't collide with our pixel events.</li>
-      </ul>
-    </div>
-    <div class="card cons">
-      <h3>Don't build on the old thing</h3>
-      <ul>
-        <li>Meta's legacy <strong>Offline Conversions API was retired in May 2025</strong> and
-        replaced by CAPI with <code>action_source</code>. Any older guide or agency
-        recommendation referencing offline event sets is out of date.</li>
-        <li>Match quality: send hashed email <em>and</em> phone, plus the click ID
-        (<code>fbc</code>) where we captured it. Email-only works but matches worse.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="weights">
-  <p class="kicker">Objection</p>
-  <h2>The event weighting logic is the weakest link</h2>
-  <p class="lede">The proposed value table has 7 size bands × booked/not-booked =
-  <strong>14 distinct values</strong>. Here's why that many weights is hard for Meta to
-  interpret and hard for us to implement correctly.</p>
-
-  <div class="grid2">
-    <div class="card cons">
-      <h3>Why it's hard for Meta to interpret</h3>
-      <ul>
-        <li><strong>Value optimization may never switch on at all.</strong> Meta requires a
-        minimum volume of attributed conversions carrying several distinct values, in a rolling
-        window, before "maximize conversion value" bidding becomes eligible. At B2B lead
-        volumes we may simply never qualify — in which case the entire value table does
-        nothing. <em>Published thresholds conflict across sources; this needs confirming with
-        our Meta rep before we commit, because it can invalidate the whole approach.</em></li>
-        <li><strong>Not enough volume per weight.</strong> We run ~70 HubSpot leads/week.
-        Spread across 14 value cells, that's ~5 leads per cell per week — and it won't spread
-        evenly, so the tail cells get 0–1. Value-based bidding has to learn a value
-        <em>distribution</em>, not just a count; it can't do that from 5 examples a week.</li>
-        <li><strong>Count-based optimization clears the bar; value-based doesn't
-        automatically.</strong> The ~50 events/week threshold is what gets an ad set out of
-        learning. Learning a reliable 14-level value curve is a harder problem on the same
-        thin volume.</li>
-        <li><strong>The hump is the risky shape.</strong> A monotonic "bigger = better" curve
-        is hard to get catastrophically wrong. A hump actively instructs Meta to
-        <em>avoid</em> large companies. If the peak is misplaced, we suppress a segment that
-        may convert fine — and the doc itself concedes "a misplaced peak steers us badly."</li>
-        <li><strong>The numbers are invented, not measured.</strong> The doc labels them
-        placeholders and says to replace them via a historical backfill that hasn't happened
-        yet. Meta will faithfully optimize toward our guess.</li>
-      </ul>
-    </div>
-    <div class="card cons">
-      <h3>Why it's hard for us to implement</h3>
-      <ul>
-        <li><strong>Enrichment failure isn't neutral — it mis-trains.</strong> Our enrichment
-        tool already fails (runs out of credits). A failed lookup doesn't produce a missing
-        value; per the table it produces <strong>"Unknown" = 65</strong>, which is 65% of the
-        peak. Every failure tells Meta "this was a good lead" about a lead we know nothing
-        about.</li>
-        <li><strong>Failures aren't random.</strong> The doc notes enrichment coverage is
-        weakest on small local businesses — so whichever way that bias runs, it becomes a
-        systematic bias baked into the optimization signal.</li>
-        <li><strong>Three variables change at once.</strong> New structure + new event +
-        invented value table. When performance moves, we won't know which one caused it.</li>
-        <li><strong>Every weight depends on a chain holding.</strong> Enrichment resolves →
-        delay fires correctly → value maps correctly → CAPI matches the lead. Any break in
-        that chain silently corrupts the signal rather than throwing an error.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="callout">
-    <strong>The proposal isn't wrong to want a quality signal — the objection is to the
-    resolution of it.</strong> Fewer, coarser tiers (e.g. disqualified / qualified-not-booked /
-    qualified-booked) put far more volume behind each weight, are far easier to debug, and
-    don't require the enrichment chain to be perfect on day one. We can always add resolution
-    later, once the backfill gives us measured values instead of guesses.
-  </div>
 </section>
 
 <section id="burn">
