@@ -314,10 +314,12 @@
         <strong>email/phone</strong>, not only a click ID.</li>
         <li>Keep the on-site Pixel running as-is — this doesn't replace it, it adds a
         second, more reliable channel alongside it.</li>
-        <li>Get a real answer on the enrichment tool's failure rate — it already fails
-        (runs out of credits) — before betting this on it. "Turn it on" isn't enough; we need
-        to know what happens when it fails.</li>
-        <li>Gate the booking calendar on that (verified) enrichment result.</li>
+        <li>Get a real answer on the enrichment tool's failure rate before betting this on it
+        — <strong>already requested from Elena</strong>. "Failure" here means both cases: the
+        tool running out of credits, <em>and</em> the tool returning a result with no company
+        size attached. Both leave us with no size to score on.</li>
+        <li>Gate the booking calendar on the self-reported answer in the scheduling tool: if
+        they answer 10 or fewer employees, they can't book.</li>
         <li>Build the value table — the size × booked → score lookup all of this feeds.</li>
       </ol>
     </div>
@@ -564,9 +566,9 @@
       <li><strong>Set the Lead event to fire on a ~60-minute delay</strong>, with the booking
       outcome attached. We wait to observe the real outcome instead of guessing — this costs
       nothing since Meta's click attribution window is 7 days.</li>
-      <li><strong>Gate the booking calendar on enrichment.</strong> Under 10 US employees →
-      don't show the calendar. Protects AE time and makes "Meeting Booked" qualified by
-      construction.</li>
+      <li><strong>Gate the booking calendar in the scheduling tool.</strong> The form asks
+      company size; answering 10 or fewer employees blocks the booking. Protects AE time and
+      makes "Meeting Booked" qualified by construction.</li>
     </ol>
   </div>
 
