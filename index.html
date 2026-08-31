@@ -195,6 +195,8 @@
   <a href="#evidence" title="Live evidence"></a>
   <a href="#proposed" title="Evergreen proposal"></a>
   <a href="#compare" title="Comparison"></a>
+  <a href="#weights" title="Weighting objection"></a>
+  <a href="#burn" title="Budget impact"></a>
   <a href="#steps" title="Next steps"></a>
 </nav>
 
@@ -396,6 +398,139 @@
         <li><strong>−</strong> Contradicts the Andromeda video's own warning: mixing many
         different personas/roles in one ad set can confuse Meta's audience-finding — unproven
         either way at our volume</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="weights">
+  <p class="kicker">Objection</p>
+  <h2>The event weighting logic is the weakest link</h2>
+  <p class="lede">The proposed value table has 7 size bands × booked/not-booked =
+  <strong>14 distinct values</strong>. Here's why that many weights is hard for Meta to
+  interpret and hard for us to implement correctly.</p>
+
+  <div class="grid2">
+    <div class="card cons">
+      <h3>Why it's hard for Meta to interpret</h3>
+      <ul>
+        <li><strong>Not enough volume per weight.</strong> We run ~70 HubSpot leads/week.
+        Spread across 14 value cells, that's ~5 leads per cell per week — and it won't spread
+        evenly, so the tail cells get 0–1. Value-based bidding has to learn a value
+        <em>distribution</em>, not just a count; it can't do that from 5 examples a week.</li>
+        <li><strong>Count-based optimization clears the bar; value-based doesn't
+        automatically.</strong> The ~50 events/week threshold is what gets an ad set out of
+        learning. Learning a reliable 14-level value curve is a harder problem on the same
+        thin volume.</li>
+        <li><strong>The hump is the risky shape.</strong> A monotonic "bigger = better" curve
+        is hard to get catastrophically wrong. A hump actively instructs Meta to
+        <em>avoid</em> large companies. If the peak is misplaced, we suppress a segment that
+        may convert fine — and the doc itself concedes "a misplaced peak steers us badly."</li>
+        <li><strong>The numbers are invented, not measured.</strong> The doc labels them
+        placeholders and says to replace them via a historical backfill that hasn't happened
+        yet. Meta will faithfully optimize toward our guess.</li>
+      </ul>
+    </div>
+    <div class="card cons">
+      <h3>Why it's hard for us to implement</h3>
+      <ul>
+        <li><strong>Enrichment failure isn't neutral — it mis-trains.</strong> Our enrichment
+        tool already fails (runs out of credits). A failed lookup doesn't produce a missing
+        value; per the table it produces <strong>"Unknown" = 65</strong>, which is 65% of the
+        peak. Every failure tells Meta "this was a good lead" about a lead we know nothing
+        about.</li>
+        <li><strong>Failures aren't random.</strong> The doc notes enrichment coverage is
+        weakest on small local businesses — so whichever way that bias runs, it becomes a
+        systematic bias baked into the optimization signal.</li>
+        <li><strong>Three variables change at once.</strong> New structure + new event +
+        invented value table. When performance moves, we won't know which one caused it.</li>
+        <li><strong>Every weight depends on a chain holding.</strong> Enrichment resolves →
+        delay fires correctly → value maps correctly → CAPI matches the lead. Any break in
+        that chain silently corrupts the signal rather than throwing an error.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>The proposal isn't wrong to want a quality signal — the objection is to the
+    resolution of it.</strong> Fewer, coarser tiers (e.g. disqualified / qualified-not-booked /
+    qualified-booked) put far more volume behind each weight, are far easier to debug, and
+    don't require the enrichment chain to be perfect on day one. We can always add resolution
+    later, once the backfill gives us measured values instead of guesses.
+  </div>
+</section>
+
+<section id="burn">
+  <p class="kicker">Budget impact</p>
+  <h2>What setup time costs us out of the $125K</h2>
+  <p class="lede">The budget burns at full rate while the setup happens — on the
+  <em>current</em> structure. The longer setup takes, the less of the month is left to
+  actually test the new one.</p>
+
+  <table>
+    <tr>
+      <th>Setup time</th>
+      <th>Spent during setup<br>(old structure)</th>
+      <th>% of month's budget</th>
+      <th>Left for new structure</th>
+      <th>Days left</th>
+      <th>Weeks new structure runs</th>
+    </tr>
+    <tr>
+      <td><strong>7 days</strong></td>
+      <td>$29K – $32K</td>
+      <td>23% – 26%</td>
+      <td>$93K – $96K</td>
+      <td>23</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <td><strong>10 days</strong></td>
+      <td>$42K – $46K</td>
+      <td>33% – 37%</td>
+      <td>$79K – $83K</td>
+      <td>20</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <td><strong>~3 weeks (21 days)</strong></td>
+      <td>$88K – $96K</td>
+      <td>70% – 77%</td>
+      <td>$29K – $38K</td>
+      <td>9</td>
+      <td>1.3</td>
+    </tr>
+  </table>
+
+  <p style="font-size:.85rem;opacity:.75;margin-top:.8rem;">Ranges bracket even pacing
+  ($4,167/day for $125K over 30 days) and our actual current run rate ($4,569/day, last 7 days
+  of August). August actuals for reference: $112,378 spent over 30 days, ~$3,746/day average.</p>
+
+  <div class="grid2" style="margin-top:2rem;">
+    <div class="card cons">
+      <h3>The real constraint isn't the money — it's the readable window</h3>
+      <p style="font-size:.95rem;">Exiting the learning phase takes roughly a week of hitting
+      the ~50 conversions/week threshold. Everything before that is not a result we can judge.
+      Subtract that week from the "weeks new structure runs" column above and you get the
+      actual amount of readable data September buys us:</p>
+      <ul>
+        <li><strong>7-day setup</strong> → ~2.3 weeks of post-learning data</li>
+        <li><strong>10-day setup</strong> → ~1.9 weeks</li>
+        <li><strong>21-day setup</strong> → ~0.3 weeks — effectively nothing</li>
+      </ul>
+    </div>
+    <div class="card cons">
+      <h3>What that means for the decision</h3>
+      <ul>
+        <li>At a 3-week setup we would spend the <strong>full $125K</strong> and end September
+        with ~2 days of judgeable data on the new structure.</li>
+        <li>The verdict lands in October either way — no setup timeline produces a
+        September answer.</li>
+        <li>If setup realistically runs past ~10 days, the honest framing is that
+        <strong>September is a setup month</strong>, not a test month — and we should plan the
+        budget and expectations around that rather than around a result.</li>
+        <li>This argues for nailing down the setup timeline <em>before</em> committing to the
+        switch, not after.</li>
       </ul>
     </div>
   </div>
