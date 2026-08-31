@@ -194,6 +194,7 @@
   <a href="#testing" title="Andromeda test"></a>
   <a href="#evidence" title="Live evidence"></a>
   <a href="#proposed" title="Evergreen proposal"></a>
+  <a href="#feasibility" title="Feasibility check"></a>
   <a href="#weights" title="Weighting objection"></a>
   <a href="#burn" title="Budget impact"></a>
   <a href="#compare" title="Comparison"></a>
@@ -359,6 +360,89 @@
         naturally happens</li>
         <li>This is the layer worth stress-testing before committing — not the tracking
         plumbing underneath it</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="feasibility">
+  <p class="kicker">Feasibility check</p>
+  <h2>Can HubSpot actually do this? Partly — not the part that matters</h2>
+  <p class="lede">HubSpot <em>does</em> have a native Meta Conversions API integration. But
+  neither of its two native paths can deliver what this plan specifically needs: one event,
+  delayed, carrying a value that changes per lead.</p>
+
+  <div class="grid2">
+    <div class="card pros">
+      <h3>What HubSpot native CAPI does do</h3>
+      <ul>
+        <li>Sends conversion events to Meta <strong>server-side</strong>, not just via the
+        browser pixel</li>
+        <li>Sends both server and browser events so Meta can <strong>deduplicate</strong>
+        them</li>
+        <li>Matches on <strong>email, phone, click ID</strong>, IP and user agent — email
+        recommended for better identity match</li>
+        <li>Triggers on: HubSpot form submissions, lifecycle stage changes, page views</li>
+        <li>Available on Marketing Hub Starter (5 events) / Professional (50) / Enterprise
+        (100)</li>
+      </ul>
+    </div>
+    <div class="card cons">
+      <h3>Where it breaks for this plan</h3>
+      <ul>
+        <li><strong>The value is static per event, not per lead.</strong> You configure a
+        form-submission event and "specify a monetary value for your event" — one number,
+        applied to every instance. The plan needs 14 different values depending on size band
+        × booked.</li>
+        <li><strong>No delay.</strong> Events fire immediately on trigger. The plan needs
+        ~60 minutes so the booking outcome is known before sending.</li>
+        <li><strong>Lifecycle-stage events carry no value field at all</strong> — and those
+        are the ones a workflow could naturally delay.</li>
+      </ul>
+      <p style="font-size:.93rem;margin-top:.9rem;"><strong>The bind:</strong> each native
+      path is missing exactly the half the other one has. Form events have a value but no
+      delay. Lifecycle events can be delayed but have no value.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Also worth flagging:</strong> HubSpot currently shows the main ad account
+    <em>Scale Army - Demand - V2 (987253545601759)</em> with a red error — "Meta is reporting
+    that your ad account is inactive." That's the account running campaigns 79/82/94/95 that
+    spent $112K in August, so it is clearly not inactive — the HubSpot↔Meta connection for it
+    is broken and needs fixing regardless of which model we pick.
+  </div>
+
+  <h3 style="margin-top:2.5rem;">The alternative, if we go this route</h3>
+  <p>Not exotic — it's the standard workaround, and it's what actually gives full control over
+  timing and value:</p>
+  <div class="diagram">
+    <span class="box">Form submitted<br><small>workflow trigger</small></span>
+    <span class="arrow">→</span>
+    <span class="box">Wait ~60 min<br><small>native workflow delay</small></span>
+    <span class="arrow">→</span>
+    <span class="box">Compute the value<br><small>size band × booked</small></span>
+    <span class="arrow">→</span>
+    <span class="box">POST to Meta CAPI<br><small>custom code action or webhook</small></span>
+  </div>
+  <div class="grid2">
+    <div class="card cons">
+      <h3>What this requires — and needs checking today</h3>
+      <ul>
+        <li><strong>Webhook actions in workflows require Operations Hub Professional.</strong>
+        Custom code actions require Data Hub Professional or Enterprise.</li>
+        <li><strong>We need to confirm which tier our portal actually has.</strong> If we have
+        neither, this path is blocked until we buy one — a real dependency, not a detail.</li>
+      </ul>
+    </div>
+    <div class="card pros">
+      <h3>The fallback if we don't have those tiers</h3>
+      <ul>
+        <li>A small self-hosted service receives the lead data and calls Meta's Conversions
+        API itself.</li>
+        <li>This isn't greenfield for us — the Scale Army Mkt Dashboard backend already talks
+        to both the Meta Marketing API and HubSpot.</li>
+        <li>More control, but it becomes something we own and maintain.</li>
       </ul>
     </div>
   </div>
