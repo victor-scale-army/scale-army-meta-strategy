@@ -263,12 +263,8 @@
         <li>CAPI is a <em>second</em>, separate channel, sent from HubSpot's server — not GTM
         (GTM only runs in the browser, so it can't act on something that happens in the CRM
         after the visit is over)</li>
-        <li>Matching doesn't rely on one click ID surviving — the lead's hashed email and phone
-        go along with it, and Meta matches on whichever identifiers it has</li>
-        <li>Email is one of the strongest signals precisely because it doesn't depend on a
-        cookie or browser session still being alive</li>
-        <li>Server-side CAPI matched by contact details is a well-documented pattern any
-        CRM-driven business uses to advertise on Meta</li>
+        <li>Matching runs on the lead's hashed email and phone, not on one click ID surviving —
+        a well-documented pattern any CRM-driven business uses to advertise on Meta</li>
       </ul>
     </div>
     <div class="card cons">
@@ -278,8 +274,6 @@
         <li>...carrying a <strong>hand-built score</strong> we invented ourselves</li>
         <li>...instead of sending each real pipeline event (Lead, MQL, MB, MH...) as it
         naturally happens</li>
-        <li>This is the layer worth stress-testing before committing — not the tracking
-        plumbing underneath it</li>
       </ul>
     </div>
   </div>
