@@ -446,6 +446,44 @@
       </ul>
     </div>
   </div>
+
+  <table>
+    <tr><th>Option</th><th>Effort</th><th>Cost</th><th>Does it meet the requirement?</th></tr>
+    <tr><td><strong>1. HubSpot workflow → 60-min delay → custom code → CAPI</strong></td>
+      <td>4–8h</td><td>Needs Ops/Data Hub Pro</td><td>Yes — full control of the value</td></tr>
+    <tr><td>2. Zapier / Make → Meta Conversions</td><td>2–4h</td><td>~$30–70/mo</td>
+      <td>Likely, but dynamic value undocumented</td></tr>
+    <tr><td>3. Small custom backend (HubSpot webhook → our service)</td><td>1–2 days</td>
+      <td>~$0 hosting</td><td>Yes — but we own uptime</td></tr>
+    <tr><td>4. HubSpot native CAPI as-is</td><td>1–2h</td><td>$0</td>
+      <td><strong>No</strong> — static value only</td></tr>
+    <tr><td>5. Server-side GTM + Meta CAPI tag</td><td>6–12h</td><td>~$20/mo</td>
+      <td>Yes, but it's option 1 plus extra hops</td></tr>
+  </table>
+
+  <div class="grid2" style="margin-top:2rem;">
+    <div class="card pros">
+      <h3>Two things that are NOT problems</h3>
+      <ul>
+        <li><strong>The 60-minute delay is fine.</strong> Meta accepts an
+        <code>event_time</code> up to <strong>7 days</strong> old. An hour is well inside the
+        window — this part of the plan is sound.</li>
+        <li><strong>Deduplication is safe.</strong> Meta only dedupes when
+        <code>event_id</code> <em>and</em> <code>event_name</code> match within 48 hours. A
+        distinctly named CRM event won't collide with our pixel events.</li>
+      </ul>
+    </div>
+    <div class="card cons">
+      <h3>Don't build on the old thing</h3>
+      <ul>
+        <li>Meta's legacy <strong>Offline Conversions API was retired in May 2025</strong> and
+        replaced by CAPI with <code>action_source</code>. Any older guide or agency
+        recommendation referencing offline event sets is out of date.</li>
+        <li>Match quality: send hashed email <em>and</em> phone, plus the click ID
+        (<code>fbc</code>) where we captured it. Email-only works but matches worse.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <section id="weights">
@@ -459,6 +497,12 @@
     <div class="card cons">
       <h3>Why it's hard for Meta to interpret</h3>
       <ul>
+        <li><strong>Value optimization may never switch on at all.</strong> Meta requires a
+        minimum volume of attributed conversions carrying several distinct values, in a rolling
+        window, before "maximize conversion value" bidding becomes eligible. At B2B lead
+        volumes we may simply never qualify — in which case the entire value table does
+        nothing. <em>Published thresholds conflict across sources; this needs confirming with
+        our Meta rep before we commit, because it can invalidate the whole approach.</em></li>
         <li><strong>Not enough volume per weight.</strong> We run ~70 HubSpot leads/week.
         Spread across 14 value cells, that's ~5 leads per cell per week — and it won't spread
         evenly, so the tail cells get 0–1. Value-based bidding has to learn a value
